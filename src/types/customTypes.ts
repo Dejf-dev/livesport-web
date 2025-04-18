@@ -58,3 +58,10 @@ export type Entity = {
 }
 
 export type EntitiesData = Entity[];
+
+export type MainData = {
+    name: string;
+    sport: string;
+    country: string;
+    imagePath: string | null;
+};
