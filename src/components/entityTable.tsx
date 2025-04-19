@@ -5,6 +5,7 @@ import Image from "next/image";
 import * as React from "react";
 import {EntitiesBySport} from "@/types/customTypes";
 import EntityService from "@/services/EntityService";
+import {useRouter} from "next/router";
 
 type Props = {
     entities: EntitiesBySport[]
@@ -12,6 +13,7 @@ type Props = {
 
 export const EntityTable: FC<Props> = ({entities}: Props) => {
     const entityService = new EntityService();
+    const router = useRouter();
 
     return (
         <Card className="bg-background text-foreground border-2 rounded-2xl w-3/4 mx-auto mb-10">
@@ -35,7 +37,10 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                         </TableRow>
                                         {
                                             entBySport.entities.map((entity, entIndex) => (
-                                                <TableRow key={`${index}-${entIndex}`}>
+                                                <TableRow key={`${index}-${entIndex}`}
+                                                          onClick={() =>
+                                                              router.push(`/detail/${entityService.getTypeEntityPath(entity.typeId)}/${entity.url}/${entity.id}`)}
+                                                          className="hover:cursor-pointer">
                                                     <TableCell className="text-left">
                                                         <div className="flex items-center gap-3">
                                                             <Card className="w-[60px] h-[60px] flex-shrink-0">

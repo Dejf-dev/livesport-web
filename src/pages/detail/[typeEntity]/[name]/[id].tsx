@@ -102,7 +102,7 @@ const DetailPage: NextPage<Props> = ({entityInfo}: Props) => {
 
 
     return (
-        <Card className="bg-sport-bar-background text-foreground border-2 rounded-2xl w-1/2 mx-auto mt-30">
+        <Card className="bg-sport-bar-background text-foreground border-2 rounded-2xl min-w-1/2 max-w-fit mx-auto mt-30">
             <CardContent className="space-y-6">
                 <div className="w-full flex items-center gap-10">
                     <Avatar className="w-[120px] h-[120px] bg-foreground border-4 border-sport-bar-foreground">
@@ -119,7 +119,7 @@ const DetailPage: NextPage<Props> = ({entityInfo}: Props) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-evenly">
+                <div className="w-full flex justify-evenly gap-10">
                     <Card
                         className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
                         <CardContent>

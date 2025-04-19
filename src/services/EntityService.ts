@@ -1,7 +1,14 @@
 import {LANG_ID, PROJECT_ID, PROJECT_TYPE_ID, QUERY, SPORT_IDS, TYPE_IDS} from "@/constants/queryParam"
 import axios, {AxiosResponse} from "axios";
 import {EntitiesBySport, Entity, EntityAllData, EntityMainData} from "@/types/customTypes";
-import {TEAM_ID, TOURNAMENT_ID} from "@/constants/typeConstants";
+import {
+    INDIVIDUAL_PLAYER,
+    INDIVIDUAL_PLAYER_ID, PLAYER_IN_TEAM,
+    TEAM,
+    TEAM_ID,
+    TOURNAMENT,
+    TOURNAMENT_ID
+} from "@/constants/typeConstants";
 
 export default class EntityService {
     private urlMandQueryParams = `${process.env.NEXT_PUBLIC_API_URL}?` +
@@ -24,6 +31,7 @@ export default class EntityService {
     public getMainData = (entity: Entity): EntityMainData => {
         return {
             id: entity.id,
+            url: entity.url,
             name: entity.name,
             typeId: entity.type.id,
             sportId: entity.sport.id,
@@ -56,6 +64,15 @@ export default class EntityService {
             })),
             teams: entity.teams?.map(team => team.name) ?? null,
             superTemplateName: entity.superTemplate?.name ?? null
+        }
+    }
+
+    public getTypeEntityPath = (typeId: number): string => {
+        switch (typeId) {
+            case TOURNAMENT_ID: return TOURNAMENT
+            case TEAM_ID: return TEAM
+            case INDIVIDUAL_PLAYER_ID: return INDIVIDUAL_PLAYER
+            default: return PLAYER_IN_TEAM
         }
     }
 

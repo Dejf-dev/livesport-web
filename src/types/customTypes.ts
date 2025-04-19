@@ -59,6 +59,7 @@ export type Entity = {
 
 export type EntityMainData = {
     id: string;
+    url: string;
     name: string;
     typeId: number;
     sportId: number;
