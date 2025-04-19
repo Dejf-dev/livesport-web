@@ -1,7 +1,7 @@
-import {LANG_ID, PROJECT_ID, PROJECT_TYPE_ID, QUERY, SPORT_IDS, TYPE_IDS} from "@/constants/QueryParamNames"
+import {LANG_ID, PROJECT_ID, PROJECT_TYPE_ID, QUERY, SPORT_IDS, TYPE_IDS} from "@/constants/queryParamNames"
 import axios, {AxiosResponse} from "axios";
 import {EntitiesBySport, Entity, EntityMainData} from "@/types/customTypes";
-import {TEAM, TOURNAMENT} from "@/constants/TypeIdConstants";
+import {TEAM, TOURNAMENT} from "@/constants/typeIdConstants";
 
 export default class EntityService {
     private urlMandQueryParams = `${process.env.NEXT_PUBLIC_API_URL}?` +

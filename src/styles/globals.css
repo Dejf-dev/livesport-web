@@ -38,6 +38,8 @@
   --sidebar-ring: oklch(0.708 0 0);
   --header-background: oklch(0.22 0.0408 223.56);
   --header-foreground: oklch(1 0 0);
+  --sport-bar-background: oklch(0.24 0.0679 250.9);
+  --sport-bar-foreground: oklch(0.84 0.0055 197.05);
 }
 
 @theme inline {
@@ -80,6 +82,8 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-header-background: var(--header-background);
   --color-header-foreground: var(--header-foreground);
+  --color-sport-bar-background: var(--sport-bar-background);
+  --color-sport-bar-foreground: var(--sport-bar-foreground);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -129,6 +133,8 @@ body {
   --sidebar-ring: oklch(0.556 0 0);
   --header-background: oklch(0.22 0.0408 223.56);
   --header-foreground: oklch(1 0 0);
+  --sport-bar-background: oklch(0.24 0.0679 250.9);
+  --sport-bar-foreground: oklch(0.84 0.0055 197.05);
 }
 
 @layer base {
