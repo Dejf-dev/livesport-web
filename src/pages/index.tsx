@@ -4,25 +4,20 @@ import {Searcher} from "@/components/searcher";
 import {SportTypes} from "@/components/sportTypes";
 import EntityService from "@/services/EntityService";
 import {EntitiesBySport, Entity, EntityMainData} from "@/types/customTypes";
-import {Table, TableRow, TableBody, TableCell} from "@/components/ui/table";
-import Image from "next/image";
-import {Card, CardContent} from "@/components/ui/card";
 import {useState} from "react";
 import {EntityTable} from "@/components/entityTable";
+import {DEFAULT_QUERY, DEFAULT_SPORTS_IDS, DEFAULT_TYPE_IDS} from "@/constants/queryParam";
 
 type Props = {
     entitiesBySport: EntitiesBySport[];
 }
 
 export const getServerSideProps = async () => {
-    const defSportsIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    const defTypeIds = [1, 2, 3, 4]
-    const defQuery = "dj"
     const entityService = new EntityService()
     let data;
 
     try {
-        const response = await entityService.fetchData(defSportsIds, defTypeIds, defQuery)
+        const response = await entityService.fetchData(DEFAULT_SPORTS_IDS, DEFAULT_TYPE_IDS, DEFAULT_QUERY)
         data = response.data
     } catch {
         return {
@@ -30,8 +25,8 @@ export const getServerSideProps = async () => {
         }
     }
 
-    const modData: EntityMainData[] = data.map((entity: Entity) => entityService.getMainData(entity))
-    const result: EntitiesBySport[] = entityService.findAvailableSports(modData)
+    const modifiedData: EntityMainData[] = data.map((entity: Entity) => entityService.getMainData(entity))
+    const result: EntitiesBySport[] = entityService.findAvailableSports(modifiedData)
 
     return {
         props: {

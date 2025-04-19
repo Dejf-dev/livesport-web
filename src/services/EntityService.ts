@@ -1,7 +1,7 @@
-import {LANG_ID, PROJECT_ID, PROJECT_TYPE_ID, QUERY, SPORT_IDS, TYPE_IDS} from "@/constants/queryParamNames"
+import {LANG_ID, PROJECT_ID, PROJECT_TYPE_ID, QUERY, SPORT_IDS, TYPE_IDS} from "@/constants/queryParam"
 import axios, {AxiosResponse} from "axios";
-import {EntitiesBySport, Entity, EntityMainData} from "@/types/customTypes";
-import {TEAM, TOURNAMENT} from "@/constants/typeIdConstants";
+import {EntitiesBySport, Entity, EntityAllData, EntityMainData} from "@/types/customTypes";
+import {TEAM_ID, TOURNAMENT_ID} from "@/constants/typeConstants";
 
 export default class EntityService {
     private urlMandQueryParams = `${process.env.NEXT_PUBLIC_API_URL}?` +
@@ -38,10 +38,31 @@ export default class EntityService {
         }
     }
 
+    public getAllData = (entity: Entity): EntityAllData => {
+        return {
+            gender: entity.gender.name,
+            name: entity.name,
+            typeId: entity.type.id,
+            participant: entity.participantTypes?.[1]?.name ?? null,
+            sport: entity.sport.name,
+            countryName: entity.defaultCountry.name,
+            countryImages: entity.defaultCountry.images.map(image => ({
+                path: image.path,
+                variantTypeId: image.variantTypeId
+            })),
+            images: entity.images.map(image => ({
+                path: image.path,
+                variantTypeId: image.variantTypeId
+            })),
+            teams: entity.teams?.map(team => team.name) ?? null,
+            superTemplateName: entity.superTemplate?.name ?? null
+        }
+    }
+
     public getPlaceholderImage = (typeId: number): string => {
         switch (typeId) {
-            case TOURNAMENT: return "/champions-cup-svgrepo-com.svg"
-            case TEAM: return "/team-3-svgrepo-com.svg"
+            case TOURNAMENT_ID: return "/champions-cup-svgrepo-com.svg"
+            case TEAM_ID: return "/team-3-svgrepo-com.svg"
             default: return "/person-svgrepo-com.svg"
         }
     }
