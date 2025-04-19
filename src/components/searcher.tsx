@@ -1,5 +1,4 @@
-import {FC, useState} from "react";
-import {Input} from "@/components/ui/input";
+import {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -11,19 +10,43 @@ import {ChevronDown} from "lucide-react";
 import * as React from "react";
 
 type Props = {
-    idxTypeEnt: number
+    setTypeIds: Dispatch<SetStateAction<number[]>>
+    setQuery: Dispatch<SetStateAction<string>>
+    fetchNewData: (event: React.FormEvent) => Promise<void>
+    query: string
 }
 
 const typeEntities = ["všechny typy", "pouze soutěže", "pouze participanti"]
 
-export const Searcher: FC<Props> = ({idxTypeEnt}: Props) => {
-    const [idxChosenTypeEnt, setIdxChosenTypeEnt] = useState(idxTypeEnt)
+export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query}: Props) => {
+    const [idxChosenTypeEnt, setIdxChosenTypeEnt] = useState<number>(-1)
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        switch (idxChosenTypeEnt) {
+            case 0: {
+                setTypeIds([1, 2, 3, 4])
+                break
+            }
+            case 1: {
+                setTypeIds([1])
+                break
+            }
+            case 2: {
+                setTypeIds([2, 3, 4])
+                break
+            }
+            default: setTypeIds([])
+        }
+    }, [idxChosenTypeEnt, setTypeIds])
 
     return (
         <div className="w-full flex items-center justify-center gap-5">
-            <Input
+            <input
                 placeholder="Zadejte hledaný text..."
-                className="max-w-md border-2 rounded-2xl p-5"
+                className="max-w-md border-2 rounded-2xl p-5 h-5"
+                onChange={event => setQuery(event.target.value)}
+                value={query}
             />
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -45,7 +68,18 @@ export const Searcher: FC<Props> = ({idxTypeEnt}: Props) => {
                     }
                 </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="outline" className="border-2 rounded-2xl p-5 hover:cursor-pointer">Hledat</Button>
+            <Button type="submit" variant="outline"
+                    className="border-2 rounded-2xl p-5 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading}
+                    onClick={async (event) => {
+                setIsLoading(true)
+                setIdxChosenTypeEnt(-1)
+                await fetchNewData(event)
+                setIsLoading(false)
+            }
+            }>
+                Hledat
+            </Button>
         </div>
 
     )
