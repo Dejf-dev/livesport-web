@@ -59,9 +59,22 @@ export type Entity = {
 
 export type EntitiesData = Entity[];
 
-export type MainData = {
+export type EntityMainData = {
+    id: string;
     name: string;
+    typeId: number;
+    sportId: number;
     sport: string;
-    country: string;
     imagePath: string | null;
+    country: {
+        name: string
+        variantTypeId: number;
+        path: string;
+    }
+    team: string | null;
+};
+
+export type EntitiesBySport = {
+  sport: string;
+  entities: EntityMainData[];
 };
