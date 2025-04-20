@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
-    remotePatterns: [new URL("https://www.livesport.cz/res/image/data/**")]
+    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_IMAGE_DATA_URL}**`)]
   },
 };
 

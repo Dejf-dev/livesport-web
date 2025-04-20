@@ -9,7 +9,7 @@ import {
     TOURNAMENT_ID
 } from "@/constants/typeConstants";
 import EntityService from "@/services/EntityService";
-import {DEFAULT_SPORTS_IDS, DEFAULT_TYPE_IDS} from "@/constants/queryParam";
+import {DEFAULT_SPORTS_IDS} from "@/constants/queryParam";
 import {Entity, EntityAllData} from "@/types/customTypes";
 import {Card, CardContent} from "@/components/ui/card";
 import Image from "next/image";
@@ -75,7 +75,6 @@ export const getServerSideProps = async ({params}: GetServerSidePropsContext) =>
     }
 
     const entity = entityArr[0]
-    console.log(entity.participantTypes)
 
     const modifiedEntity = entityService.getAllData(entity)
 
