@@ -7,6 +7,7 @@ import {EntitiesBySport, Entity, EntityMainData} from "@/types/customTypes";
 import {useState} from "react";
 import {EntityTable} from "@/components/entityTable";
 import {DEFAULT_QUERY, DEFAULT_SPORTS_IDS, DEFAULT_TYPE_IDS} from "@/constants/queryParam";
+import {Loading} from "@/components/loading";
 
 type Props = {
     entitiesBySport: EntitiesBySport[];
@@ -41,6 +42,7 @@ const Home: NextPage<Props> = ({entitiesBySport}: Props) => {
     const [query, setQuery] = useState<string>("")
     const [entities, setEntities] = useState<EntitiesBySport[]>(entitiesBySport)
     const entityService = new EntityService()
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchNewData = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault()
@@ -66,10 +68,17 @@ const Home: NextPage<Props> = ({entitiesBySport}: Props) => {
 
     return (
         <div className="w-full">
-            <Searcher setTypeIds={setTypeIds} setQuery={setQuery} fetchNewData={fetchNewData} query={query}/>
+            <Searcher setTypeIds={setTypeIds} setQuery={setQuery} fetchNewData={fetchNewData} query={query}
+                      isLoading={isLoading} setIsLoading={setIsLoading}/>
             <SportTypes sportIds={sportIds} setSportIds={setSportIds}/>
-
-            <EntityTable entities={entities} />
+            {
+                isLoading ?
+                    <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-fit w-fit">
+                        <Loading />
+                    </div>
+                    :
+                    <EntityTable entities={entities} />
+            }
         </div>
     )
 }

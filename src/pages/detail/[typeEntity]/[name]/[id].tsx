@@ -11,10 +11,11 @@ import {
 import EntityService from "@/services/EntityService";
 import {DEFAULT_SPORTS_IDS} from "@/constants/queryParam";
 import {Entity, EntityAllData} from "@/types/customTypes";
-import {Card, CardContent} from "@/components/ui/card";
-import Image from "next/image";
 import * as React from "react";
-import {Avatar, AvatarImage} from "@/components/ui/avatar";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import {Loading} from "@/components/loading";
+import {EntityCard} from "@/components/entityCard";
 
 type Props = {
     entityInfo: EntityAllData
@@ -86,101 +87,43 @@ export const getServerSideProps = async ({params}: GetServerSidePropsContext) =>
 }
 
 const DetailPage: NextPage<Props> = ({entityInfo}: Props) => {
-    const entityService = new EntityService()
+    const router = useRouter()
+    const [isPageLoading, setIsPageLoading] = useState(false)
 
-    const replaceEwithA = (str: string) => str.replaceAll("e", "a")
-    const replaceTypeIdForPos = (typeId: number) => {
-        if (typeId === 1) {
-            return "Tournament"
-        } else if (typeId === 2) {
-            return "Team"
+    useEffect(() => {
+        const handleStart = () => setIsPageLoading(true)
+        const handleStop = () => setIsPageLoading(false)
+
+        router.events.on("routeChangeStart", handleStart)
+        router.events.on("routeChangeComplete", handleStop)
+        router.events.on("routeChangeError", handleStop)
+
+        return () => {
+            router.events.off("routeChangeStart", handleStart)
+            router.events.off("routeChangeComplete", handleStop)
+            router.events.off("routeChangeError", handleStop)
         }
+    }, [router])
 
-        return "Player"
+    if (isPageLoading) {
+        return (
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-fit w-fit">
+                <Loading />
+            </div>
+        )
     }
 
 
     return (
-        <Card className="bg-sport-bar-background text-foreground border-2 rounded-2xl min-w-1/2 max-w-fit mx-auto mt-30">
-            <CardContent className="space-y-6">
-                <div className="w-full flex items-center gap-10">
-                    <Avatar className="w-[120px] h-[120px] bg-foreground border-4 border-sport-bar-foreground">
-                        <AvatarImage src={entityInfo.images.length === 0
-                            ? entityService.getPlaceholderImage(entityInfo.typeId)
-                            : process.env.NEXT_PUBLIC_IMAGE_DATA_URL + entityInfo.images[0].path}/>
-                    </Avatar>
-                    <div className="space-y-2">
-                        <h3 className="font-bold text-5xl">{entityInfo.name}</h3>
-                        <div>
-                            <p className="text-sport-bar-foreground"><b>Gender:</b> {replaceEwithA(entityInfo.gender)}
-                            </p>
-                            <p className="text-sport-bar-foreground"><b>Sport:</b> {entityInfo.sport}</p>
-                        </div>
+        <>
+            {
+                isPageLoading ? <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-fit w-fit">
+                        <Loading />
                     </div>
-                </div>
-                <div className="w-full flex justify-evenly gap-10">
-                    <Card
-                        className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
-                        <CardContent>
-                            <div className="text-center space-y-1">
-                                <h4 className="text-foreground text-xl"><b>{replaceTypeIdForPos(entityInfo.typeId)}</b>
-                                </h4>
-                                <p className="text-sm">Role</p>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card
-                        className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
-                        <CardContent>
-                            <div className="text-center space-y-1">
-                                <div className="flex gap-4 items-center">
-                                    <h4 className="text-foreground text-xl"><b>{entityInfo.countryName}</b></h4>
-                                    <Image src={`${process.env.NEXT_PUBLIC_IMAGE_DATA_URL}${entityInfo.countryImages[0].path}`}
-                                           alt="Country image"
-                                           width={40}
-                                           height={40}
-                                    />
-                                </div>
-                                <p className="text-sm">Nationality</p>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    {entityInfo.participant &&
-                        <Card
-                            className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
-                            <CardContent>
-                                <div className="text-center space-y-1">
-                                    <h4 className="text-foreground text-xl"><b>{entityInfo.participant}</b></h4>
-                                    <p className="text-sm">Position</p>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    }
-                    {entityInfo.teams && entityInfo.teams.length !== 0 &&
-                        <Card
-                            className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
-                            <CardContent>
-                                <div className="text-center space-y-1">
-                                    <h4 className="text-foreground text-xl"><b>{entityInfo.teams?.join(", ")}</b></h4>
-                                    <p className="text-sm">Team</p>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    }
-                    {entityInfo.superTemplateName &&
-                        <Card
-                            className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
-                            <CardContent>
-                                <div className="text-center space-y-1">
-                                    <h4 className="text-foreground text-xl"><b>{entityInfo.superTemplateName}</b></h4>
-                                    <p className="text-sm">Tournament format</p>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    }
-                </div>
-            </CardContent>
-        </Card>
+                    :
+                    <EntityCard entityInfo={entityInfo} />
+            }
+        </>
     )
 }
 
