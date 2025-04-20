@@ -4,10 +4,11 @@ import {Searcher} from "@/components/searcher";
 import {SportTypes} from "@/components/sportTypes";
 import EntityService from "@/services/EntityService";
 import {EntitiesBySport, Entity, EntityMainData} from "@/types/customTypes";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {EntityTable} from "@/components/entityTable";
 import {DEFAULT_QUERY, DEFAULT_SPORTS_IDS, DEFAULT_TYPE_IDS} from "@/constants/queryParam";
 import {Loading} from "@/components/loading";
+import {NO_SPORT_ID_ERROR, NO_TYPE_ID_ERROR, SHORT_QUERY_ERROR} from "@/constants/errorMessages";
 
 type Props = {
     entitiesBySport: EntitiesBySport[];
@@ -42,18 +43,48 @@ const Home: NextPage<Props> = ({entitiesBySport}: Props) => {
     const [query, setQuery] = useState<string>("")
     const [entities, setEntities] = useState<EntitiesBySport[]>(entitiesBySport)
     const entityService = new EntityService()
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
+
+
+    // Auto-dismiss error after 3 seconds
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => setError(""), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
     const fetchNewData = async (event: React.FormEvent): Promise<void> => {
+        let errorMessage = ""
         event.preventDefault()
+
+        setError("")
+
+        // checking invalid query parameters
+        if (sportIds.length === 0) {
+            errorMessage += NO_SPORT_ID_ERROR + "\n"
+        }
+        if (typeIds.length === 0) {
+            errorMessage += NO_TYPE_ID_ERROR + "\n"
+        }
+        if (query === "") {
+            errorMessage += SHORT_QUERY_ERROR;
+        }
+
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
+        }
 
         let data;
 
         try {
             const response = await entityService.fetchData(sportIds, typeIds, query)
             data = response.data
-        } catch(err) {
-            throw err
+        } catch {
+            setError("An error occurred while fetching the data. Please try again.");
+            return
         }
 
         const modData: EntityMainData[] = data.map((entity: Entity) => entityService.getMainData(entity))
@@ -69,7 +100,7 @@ const Home: NextPage<Props> = ({entitiesBySport}: Props) => {
     return (
         <div className="w-full">
             <Searcher setTypeIds={setTypeIds} setQuery={setQuery} fetchNewData={fetchNewData} query={query}
-                      isLoading={isLoading} setIsLoading={setIsLoading}/>
+                      isLoading={isLoading} setIsLoading={setIsLoading} error={error}/>
             <SportTypes sportIds={sportIds} setSportIds={setSportIds}/>
             {
                 isLoading ?

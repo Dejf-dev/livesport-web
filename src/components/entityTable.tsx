@@ -26,7 +26,8 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
 
                                 return (
                                     <>
-                                        <TableRow className="hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default">
+                                        <TableRow className="hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default"
+                                                  key={`${index}-0`}>
                                             <TableCell colSpan={4} className="px-0 py-5">
                                                 <Card className="bg-sport-bar-background border-2 rounded-2xl text-foreground w-full">
                                                     <CardContent className="font-bold text-2xl">
@@ -37,7 +38,7 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                         </TableRow>
                                         {
                                             entBySport.entities.map((entity, entIndex) => (
-                                                <TableRow key={`${index}-${entIndex}`}
+                                                <TableRow key={`${index}-${entIndex + 1}`}
                                                           onClick={() =>
                                                               router.push(`/detail/${entityService.getTypeEntityPath(entity.typeId)}/${entity.url}/${entity.id}`)}
                                                           className="hover:cursor-pointer">
