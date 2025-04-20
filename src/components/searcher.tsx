@@ -14,13 +14,14 @@ type Props = {
     setQuery: Dispatch<SetStateAction<string>>
     fetchNewData: (event: React.FormEvent) => Promise<void>
     query: string
+    isLoading: boolean
+    setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const typeEntities = ["všechny typy", "pouze soutěže", "pouze participanti"]
+const typeEntities = ["all types", "competitions only", "participants only"]
 
-export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query}: Props) => {
+export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query, isLoading, setIsLoading}: Props) => {
     const [idxChosenTypeEnt, setIdxChosenTypeEnt] = useState<number>(-1)
-    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         switch (idxChosenTypeEnt) {
@@ -43,7 +44,7 @@ export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query}:
     return (
         <div className="w-full flex items-center justify-center gap-5">
             <input
-                placeholder="Zadejte hledaný text..."
+                placeholder="Enter search text..."
                 className="max-w-md border-2 rounded-2xl p-5 h-5"
                 onChange={event => setQuery(event.target.value)}
                 value={query}
@@ -51,7 +52,7 @@ export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query}:
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="border-2 rounded-2xl p-5">
-                        Typ entity <ChevronDown />
+                        Entity type <ChevronDown />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">

@@ -7,7 +7,7 @@ type Props = {
 }
 
 // todo, change dynamically with fetching all sports
-const sports = ["Fotbal", "Tenis", "Basketball", "Hokej", "Americký fotbal", "Baseball", "Házená", "Rugby", "Florbal"];
+const sports = ["Soccer", "Tennis", "Basketball", "Hockey", "American football", "Baseball", "Handball", "Rugby Union", "Floorball"];
 
 export const SportTypes: FC<Props> = ({sportIds, setSportIds}: Props) => {
 
