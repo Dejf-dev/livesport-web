@@ -12,6 +12,10 @@ const config: Config = {
   testEnvironment: 'jsdom',
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  // Add the moduleNameMapper here to resolve the '@' alias
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1', // Adjust this based on your actual folder structure
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

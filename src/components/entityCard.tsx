@@ -31,7 +31,8 @@ export const EntityCard: FC<Props> = ({entityInfo}: Props) => {
                     <Avatar className="w-[120px] h-[120px] bg-foreground border-4 border-sport-bar-foreground">
                         <AvatarImage src={entityInfo.images.length === 0
                             ? entityService.getPlaceholderImage(entityInfo.typeId)
-                            : process.env.NEXT_PUBLIC_IMAGE_DATA_URL + entityInfo.images[0].path}/>
+                            : process.env.NEXT_PUBLIC_IMAGE_DATA_URL + entityInfo.images[0].path}
+                        />
                     </Avatar>
                     <div className="space-y-2">
                         <h3 className="font-bold text-5xl">{entityInfo.name}</h3>
@@ -86,7 +87,7 @@ export const EntityCard: FC<Props> = ({entityInfo}: Props) => {
                             <CardContent>
                                 <div className="text-center space-y-1">
                                     <h4 className="text-foreground text-xl"><b>{entityInfo.teams?.join(", ")}</b></h4>
-                                    <p className="text-sm">Team</p>
+                                    <p className="text-sm">Teams</p>
                                 </div>
                             </CardContent>
                         </Card>
