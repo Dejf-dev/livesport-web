@@ -5,12 +5,19 @@ import {usePathname} from "next/navigation";
 import {Separator} from "@/components/ui/separator";
 import Link from "next/link";
 
-export const Header: FC = () => {
+type Props = {
+    isErrorPage: boolean;
+}
+
+export const Header: FC<Props> = ({isErrorPage}: Props) => {
     const pathname = usePathname();
     const [title, setTitle] = useState("");
 
     useEffect(() => {
-        if (pathname === "/") {
+        if (isErrorPage) {
+          setTitle("Error");
+        }
+        else if (pathname === "/") {
             setTitle("Results");
         } else {
             const pathParts = pathname.split("/").filter(Boolean);
