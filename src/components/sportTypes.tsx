@@ -6,7 +6,6 @@ type Props = {
     setSportIds: Dispatch<SetStateAction<number[]>>
 }
 
-// todo, change dynamically with fetching all sports
 const sports = ["Soccer", "Tennis", "Basketball", "Hockey", "American football", "Baseball", "Handball", "Rugby Union", "Floorball"];
 
 export const SportTypes: FC<Props> = ({sportIds, setSportIds}: Props) => {

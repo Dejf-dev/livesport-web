@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import Image from "next/image";
 import * as React from "react";
 import {usePathname} from "next/navigation";
@@ -7,14 +7,17 @@ import Link from "next/link";
 
 export const Header: FC = () => {
     const pathname = usePathname();
+    const [title, setTitle] = useState("");
 
-    const makeTitle = () => {
-        if (pathname == "/") {
-            return "Results"
+    useEffect(() => {
+        if (pathname === "/") {
+            setTitle("Results");
+        } else {
+            const pathParts = pathname.split("/").filter(Boolean);
+            const firstSegment = pathParts[0]?.charAt(0).toUpperCase() + pathParts[0]?.slice(1);
+            setTitle(firstSegment || "");
         }
-
-        return pathname.split("/").filter(Boolean).map(part => part.charAt(0).toUpperCase() + part.slice(1))[0];
-    }
+    }, [pathname]);
 
     return (
         <div className="bg-header-background mb-7">
@@ -23,7 +26,7 @@ export const Header: FC = () => {
                     <Image src="/livesport-logo.jpg" alt="Livesport logo" width={100} height={100}/>
                     <h1 className="text-6xl">Livesport</h1>
                 </Link>
-                <h2 className="text-5xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{makeTitle()}</h2>
+                <h2 className="text-5xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{title}</h2>
             </div>
             <Separator />
         </div>
