@@ -24,7 +24,7 @@ export const Header: FC<Props> = ({isErrorPage}: Props) => {
             const firstSegment = pathParts[0]?.charAt(0).toUpperCase() + pathParts[0]?.slice(1);
             setTitle(firstSegment || "");
         }
-    }, [pathname]);
+    }, [isErrorPage, pathname]);
 
     return (
         <div className="bg-header-background mb-7">
