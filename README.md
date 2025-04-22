@@ -1,40 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Livesport - Web
+### Web task for summer internship at Livesport
 
-## Getting Started
+## Screenshots of app
+* ![Screenshot of main page](main_page.png)
+* ![Screenshot of detail page](detail_page.png)
 
-First, run the development server:
+## Setup - how to launch app using Docker
+* **Requirements** - installed Docker, docker-compose
+* Go to root of the project - `cd livesport-web/`
+* Start the application - `docker-compose up`, you can put argument `-d` to run it on background
+* The web app will be available at `http://localhost:3000`
+* to end whole containerized app, just enter `Ctrl+C` on terminal where you launched it, if you launch application with `-d` argument then type to terminal `docker-compose down`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Pages
+* `/` - main page, showing table with entities
+* `/detail/[typeEntity]/[name]/[id]` - detail page showing extra information about entity
+  * `[typeEntity]` - must be one of these values `['tournament', 'team', 'individual-player', 'player-in-team']`
+  * `[name]` - name of entity, corresponds to attribute `url` in API JSON response
+  * `[id]` - id of entity, corresponds to attribute `id` in API JSON response
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tests
+* Tests can be found in folder `__tests__`
+* Tests can be run using command `npm run test`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## Contact
+* If you have some problem with code, app or other stuff related with this project, you can contact me on email [ratimec.david99@gmail.com](mailto:ratimec.david99@gmail.com) and I can help you :)
