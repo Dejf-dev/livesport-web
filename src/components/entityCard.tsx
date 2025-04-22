@@ -25,9 +25,9 @@ export const EntityCard: FC<Props> = ({entityInfo}: Props) => {
     }
 
     return (
-        <Card className="bg-sport-bar-background text-foreground border-2 rounded-2xl min-w-1/2 max-w-fit mx-auto mt-30">
+        <Card className="bg-sport-bar-background text-foreground border-2 rounded-2xl max-w-fit mx-auto mt-30 max-md:max-w-[98%]">
             <CardContent className="space-y-6">
-                <div className="w-full flex items-center gap-10">
+                <div className="w-full flex max-md:flex-col items-center gap-10">
                     <Avatar className="w-[120px] h-[120px] bg-foreground border-4 border-sport-bar-foreground">
                         <AvatarImage src={entityInfo.imagePath === null
                             ? entityService.getPlaceholderImage(entityInfo.typeId)
@@ -43,7 +43,7 @@ export const EntityCard: FC<Props> = ({entityInfo}: Props) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-evenly gap-10">
+                <div className="w-full flex max-md:flex-col justify-evenly gap-10 *:w-fit *:max-md:mx-auto">
                     <Card
                         className="text-sport-bar-foreground bg-header-background border-2 rounded-2xl border-sport-bar-foreground">
                         <CardContent>
