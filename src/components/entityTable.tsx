@@ -21,13 +21,9 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                 <Table>
                     <TableBody>
                         {
-                            entities.map((entBySport, index) => {
-
-
-                                return (
-                                    <>
-                                        <TableRow className="hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default"
-                                                  key={`${index}-0`}>
+                            entities.map((entBySport, index) => (
+                                    <React.Fragment key={`sport-group-${index}`}>
+                                        <TableRow className="hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default">
                                             <TableCell colSpan={4} className="px-0 py-5">
                                                 <Card className="bg-sport-bar-background border-2 rounded-2xl text-foreground w-full">
                                                     <CardContent className="font-bold text-2xl">
@@ -37,8 +33,8 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                             </TableCell>
                                         </TableRow>
                                         {
-                                            entBySport.entities.map((entity, entIndex) => (
-                                                <TableRow key={`${index}-${entIndex + 1}`}
+                                            entBySport.entities.map(entity => (
+                                                <TableRow key={`entity-${entity.id}`}
                                                           onClick={() =>
                                                               router.push(`/detail/${entityService.getTypeEntityPath(entity.typeId)}/${entity.url}/${entity.id}`)}
                                                           className="hover:cursor-pointer">
@@ -75,9 +71,9 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                                 </TableRow>
                                             ))
                                         }
-                                    </>
+                                    </React.Fragment>
                                 )
-                            })
+                            )
                         }
                     </TableBody>
                 </Table>
