@@ -22,7 +22,6 @@ export default function App({Component, pageProps}: AppProps) {
             </Head>
             <div className={poppins.className}>
                 <Header isErrorPage={isErrorPage}/>
-                <OfflineBanner/>
                 <Component {...pageProps} />
             </div>
         </>

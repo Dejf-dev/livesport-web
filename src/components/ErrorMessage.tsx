@@ -15,7 +15,7 @@ export const ErrorMessage: FC<Props> = ({mainText, descText, is404, buttonText}:
     const router = useRouter()
 
     return (
-        <Card className="bg-sport-bar-background text-foreground border-2 w-1/2 mx-auto mt-30">
+        <Card className="bg-sport-bar-background text-foreground border-2 w-1/2 mx-auto mt-30 max-sm:w-[98%]">
             <CardContent className="flex flex-col items-center justify-center text-foreground">
                 <h1 className="text-4xl font-bold mb-4">{mainText}</h1>
                 <p className="mb-6">{descText}</p>
