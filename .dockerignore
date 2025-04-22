@@ -1,7 +1,27 @@
+# Ignore dependencies & logs
 node_modules
 npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# Ignore Docker files
 Dockerfile
 .dockerignore
-*.md
+
+# Ignore version control
 .git
 .gitignore
+
+# Ignore docs & readme
+*.md
+
+# Ignore local dev files
+*.spec.js
+coverage/
+.env
+.env.*
+.vscode/
+.idea/
+*.log
+.next
+.swc
