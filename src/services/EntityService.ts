@@ -9,6 +9,8 @@ import {
     TOURNAMENT,
     TOURNAMENT_ID
 } from "@/constants/typeConstants";
+import {images} from "next/dist/build/webpack/config/blocks/images";
+import {USED_VARIANT_TYPE_ID} from "@/constants/usedProperties";
 
 export default class EntityService {
     private urlMandQueryParams = `${process.env.NEXT_PUBLIC_API_URL}?` +
@@ -29,6 +31,9 @@ export default class EntityService {
     }
 
     public getMainData = (entity: Entity): EntityMainData => {
+        const imageWithSuppVarType
+            = entity.images.filter(image => image.variantTypeId === USED_VARIANT_TYPE_ID)
+
         return {
             id: entity.id,
             url: entity.url,
@@ -36,7 +41,7 @@ export default class EntityService {
             typeId: entity.type.id,
             sportId: entity.sport.id,
             sport: entity.sport.name,
-            imagePath: entity.images.length > 0 ? entity.images[0].path : null,
+            imagePath: imageWithSuppVarType.length !== 0 ? imageWithSuppVarType[0].path : null,
             country: {
                 name: entity.defaultCountry.name,
                 variantTypeId: entity.defaultCountry.images[0].variantTypeId,
@@ -47,6 +52,9 @@ export default class EntityService {
     }
 
     public getAllData = (entity: Entity): EntityAllData => {
+        const imageWithSuppVarType
+            = entity.images.filter(image => image.variantTypeId === USED_VARIANT_TYPE_ID)
+
         return {
             gender: entity.gender.name,
             name: entity.name,
@@ -58,10 +66,7 @@ export default class EntityService {
                 path: image.path,
                 variantTypeId: image.variantTypeId
             })),
-            images: entity.images.map(image => ({
-                path: image.path,
-                variantTypeId: image.variantTypeId
-            })),
+            imagePath: imageWithSuppVarType.length !== 0 ? imageWithSuppVarType[0].path : null,
             teams: entity.teams?.map(team => team.name) ?? null,
             superTemplateName: entity.superTemplate?.name ?? null
         }

@@ -89,10 +89,7 @@ export type EntityAllData = {
         path: string;
         variantTypeId: number;
     }[];
-    images: {
-        path: string;
-        variantTypeId: number;
-    }[];
+    imagePath: string | null;
     teams: string[] | null;
     superTemplateName: string | null;
 }

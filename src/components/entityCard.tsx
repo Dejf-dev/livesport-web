@@ -29,9 +29,9 @@ export const EntityCard: FC<Props> = ({entityInfo}: Props) => {
             <CardContent className="space-y-6">
                 <div className="w-full flex items-center gap-10">
                     <Avatar className="w-[120px] h-[120px] bg-foreground border-4 border-sport-bar-foreground">
-                        <AvatarImage src={entityInfo.images.length === 0
+                        <AvatarImage src={entityInfo.imagePath === null
                             ? entityService.getPlaceholderImage(entityInfo.typeId)
-                            : process.env.NEXT_PUBLIC_IMAGE_DATA_URL + entityInfo.images[0].path}
+                            : process.env.NEXT_PUBLIC_IMAGE_DATA_URL + entityInfo.imagePath}
                         />
                     </Avatar>
                     <div className="space-y-2">

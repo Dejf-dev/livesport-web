@@ -1,0 +1,1 @@
+export const USED_VARIANT_TYPE_ID = 15
