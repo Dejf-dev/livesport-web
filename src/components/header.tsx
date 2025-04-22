@@ -27,13 +27,13 @@ export const Header: FC<Props> = ({isErrorPage}: Props) => {
     }, [isErrorPage, pathname]);
 
     return (
-        <div className="bg-header-background mb-7">
-            <div className="w-full flex items-center relative mb-3">
+        <div className="bg-header-background mb-7 w-full">
+            <div className="w-full flex flex-row max-lg:flex-col items-center mb-3 lg:mx-auto">
                 <Link className="h-full flex items-center" href="/">
                     <Image src="/livesport-logo.jpg" alt="Livesport logo" width={100} height={100}/>
                     <h1 className="text-6xl">Livesport</h1>
                 </Link>
-                <h2 className="text-5xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{title}</h2>
+                <h2 className="text-5xl lg:absolute lg:left-1/2 lg:-translate-x-1/2">{title}</h2>
             </div>
             <Separator />
         </div>

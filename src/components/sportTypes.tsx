@@ -11,7 +11,7 @@ const sports = ["Soccer", "Tennis", "Basketball", "Hockey", "American football",
 export const SportTypes: FC<Props> = ({sportIds, setSportIds}: Props) => {
 
     return (
-        <div className="flex w-full justify-center gap-10 my-10">
+        <div className="flex flex-wrap w-full justify-center gap-10 my-10">
             {
                 sports.map((sport, index) => (
                     <Card key={index} className={`text-foreground border-2 rounded-2xl hover:bg-foreground 

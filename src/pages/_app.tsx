@@ -4,6 +4,7 @@ import {Header} from "@/components/header";
 import {Poppins} from "next/font/google";
 import OfflineBanner from "@/components/offlineBanner";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 const poppins = Poppins({
     weight: "400",
@@ -15,10 +16,15 @@ export default function App({Component, pageProps}: AppProps) {
     const isErrorPage = ["/404", "/500"].includes(router.pathname);
 
     return (
-        <div className={poppins.className}>
-            <Header isErrorPage={isErrorPage}/>
-            <OfflineBanner/>
-            <Component {...pageProps} />
-        </div>
+        <>
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            </Head>
+            <div className={poppins.className}>
+                <Header isErrorPage={isErrorPage}/>
+                <OfflineBanner/>
+                <Component {...pageProps} />
+            </div>
+        </>
     );
 }

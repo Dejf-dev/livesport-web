@@ -16,7 +16,7 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
     const router = useRouter();
 
     return (
-        <Card className="bg-background text-foreground border-2 rounded-2xl w-3/4 mx-auto mb-10">
+        <Card className="bg-background text-foreground border-2 rounded-2xl w-3/4 max-lg:w-[98%] mx-auto mb-10">
             <CardContent>
                 <Table>
                     <TableBody>
@@ -25,7 +25,7 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                     <React.Fragment key={`sport-group-${index}`}>
                                         <TableRow className="hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default">
                                             <TableCell colSpan={4} className="px-0 py-5">
-                                                <Card className="bg-sport-bar-background border-2 rounded-2xl text-foreground w-full">
+                                                <Card className="bg-sport-bar-background border-2 rounded-2xl text-foreground min-w-32 max-sm:w-1/2">
                                                     <CardContent className="font-bold text-2xl">
                                                         {entBySport.sport}
                                                     </CardContent>
@@ -37,7 +37,7 @@ export const EntityTable: FC<Props> = ({entities}: Props) => {
                                                 <TableRow key={`entity-${entity.id}`}
                                                           onClick={() =>
                                                               router.push(`/detail/${entityService.getTypeEntityPath(entity.typeId)}/${entity.url}/${entity.id}`)}
-                                                          className="hover:cursor-pointer">
+                                                          className="hover:cursor-pointer max-sm:flex max-sm:flex-col">
                                                     <TableCell className="text-left">
                                                         <div className="flex items-center gap-3">
                                                             <Card className="w-[60px] h-[60px] flex-shrink-0">

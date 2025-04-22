@@ -45,7 +45,7 @@ export const Searcher: FC<Props> = ({setTypeIds, setQuery, fetchNewData, query, 
 
     return (
         <div className={`flex flex-col ${error && `gap-5`}`}>
-            <div className="w-full flex items-center justify-center gap-5">
+            <div className="w-full flex flew-row max-lg:flex-col items-center justify-center gap-5">
                 <input
                     placeholder="Enter search text..."
                     className="max-w-md border-2 rounded-2xl p-5 h-5"
